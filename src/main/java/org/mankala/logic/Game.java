@@ -127,6 +127,7 @@ public class Game {
         int selectedPitIndex = selectedPit - 1;
         int startingPitIndex = selectedPit;
         int numberOfStones = currentPlayer.getPits().get(selectedPitIndex);
+        currentPlayer.getPits().set(selectedPitIndex, 0);
 
         if (numberOfStones == 0) {
             System.out.println("Current pit is empty. Choose another one");
@@ -144,7 +145,6 @@ public class Game {
 
                 // Check if we should continue or the stones are finished already.
                 if (numberOfStones == 0) {
-                    currentPlayer.getPits().set(selectedPitIndex, 0);
                     // The player can take the opponents stone from the cross opposite pot and put it into the manKala
                     // if he ended up having one stone in his last pot in his side
                     if(currentPlayer.getPits().get(i) == 1) {
@@ -162,7 +162,6 @@ public class Game {
             currentPlayer.setManKala(currentPlayer.getManKala() + 1);
             numberOfStones--;
             if (numberOfStones == 0) {
-                currentPlayer.getPits().set(selectedPitIndex, 0);
                 // We should give another round to current player and skip the opponent
                 setShouldBeSkipped(true);
                 return false;
@@ -176,7 +175,6 @@ public class Game {
 
                 // Check if we should continue or the stones are finished already.
                 if (numberOfStones == 0) {
-                    currentPlayer.getPits().set(selectedPitIndex, 0);
                     return true;
                 }
             }
