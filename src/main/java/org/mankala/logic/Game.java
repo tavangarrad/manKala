@@ -2,12 +2,12 @@ package org.mankala.logic;
 
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.mankala.entity.Player;
+import org.mankala.view.Board;
 
 /**
  * This class contains the logic of the game.
@@ -30,6 +30,9 @@ public class Game {
 
     // Object containing information about the selected pit by player
     private PitSeLector pitSeLector = new PitSeLector();
+
+    // Helper class to show the board after each round and final result
+    private Board board = new Board();
 
     // Check if the player should be skipped for a round
     private boolean shouldBeSkipped = false;
@@ -58,7 +61,7 @@ public class Game {
         playerTwo.setManKala(0);
         players.add(playerTwo);
 
-        showBoard(playerOne, playerTwo);
+        board.showBoard(playerOne, playerTwo);
 
     }
 
@@ -80,7 +83,7 @@ public class Game {
 
         } while (!isFinished);
 
-        printResult(playerOne, playerTwo);
+        board.printResult(playerOne, playerTwo);
     }
 
     public void selectPitAndUpdateBoard(Player currentPlayer, Player opponentPlayer) {
@@ -95,9 +98,9 @@ public class Game {
 
             // Always show the board by showing the first player on top
             if (currentPlayer.getId() == 1) {
-                showBoard(currentPlayer, opponentPlayer);
+                board.showBoard(currentPlayer, opponentPlayer);
             } else {
-                showBoard(opponentPlayer, currentPlayer);
+                board.showBoard(opponentPlayer, currentPlayer);
             }
 
             // Check if we can continue or game is over
@@ -184,33 +187,6 @@ public class Game {
         } while(numberOfStones > 0);
 
         return true;
-    }
-
-    // Output methods used to show the result
-    public void showBoard(Player playerOne, Player playerTwo) {
-        System.out.println("Player one:" +
-                Arrays.toString(playerOne.getPits().toArray()) +
-                " manKala(" + playerOne.getId() + "):"+ playerOne.getManKala());
-        System.out.println("Player two:" +
-                Arrays.toString(playerTwo.getPits().toArray()) +
-                " manKala(" + playerTwo.getId() + "):"+ playerTwo.getManKala());
-
-    }
-
-    private void printResult(Player playerOne, Player playerTwo) {
-        if (playerOne.getManKala() > playerTwo.getManKala()) {
-            System.out.println("Hooray! Player one is the winner");
-            System.out.println("ManKala of the first player:" + playerOne.getManKala());
-            System.out.println("ManKala of the second player:" + playerTwo.getManKala());
-
-        } else if (playerOne.getManKala() < playerTwo.getManKala()) {
-            System.out.println("Hooray! Player two is the winner");
-            System.out.println("ManKala of the second player:" + playerTwo.getManKala());
-            System.out.println("ManKala of the first player:" + playerOne.getManKala());
-        } else {
-            System.out.println("No winner For this game, try it again");
-        }
-
     }
 
     // Other methods
